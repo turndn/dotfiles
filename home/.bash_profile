@@ -4,7 +4,4 @@ export LESS="iMR"
 export PAGER="less"
 export SYSTEMD_LESS="iFRSMK"
 
-export GOPATH=~/Documents/src/go
-export ANDROID_HOME=~/.local/opt/android-sdk
-
 [[ -f ~/.bashrc ]] && . ~/.bashrc

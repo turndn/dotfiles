@@ -7,8 +7,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'deton/jasegment.vim'
 Plug 'fatih/vim-go', {'for': 'go'}
-Plug 'junegunn/fzf', {'dir': '~/.local/opt/fzf', 'do': './install --bin'}
-Plug 'junegunn/fzf.vim'
 Plug 'ledger/vim-ledger', {'for': 'ledger'}
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'majutsushi/tagbar'
@@ -42,7 +40,6 @@ set linebreak
 """"""""
 "  UI  "
 """"""""
-set colorcolumn=81
 set number
 set ruler
 set showcmd
@@ -100,10 +97,6 @@ au BufRead,BufNewFile *.cuh setfiletype cuda
 set grepprg=rg\ --vimgrep\ --hidden
 au QuickfixCmdPost [^lA-Z]* cwindow
 au QuickfixCmdPost l* lwindow
-
-" FZF "
-command! -bang -nargs=* Grep
-  \ call fzf#vim#grep('rg --vimgrep --color=always '.shellescape(<q-args>), 1, <bang>0)
 
 " EasyMotion"
 let g:EasyMotion_use_migemo=1

@@ -23,7 +23,6 @@ main() {
   echo "$(tput bold)== Installing configuration ==$(tput sgr0)"
   setup::shell
   setup::vim
-  setup::gpg
   setup::misc
 
   if [[ -n "$install_deps" ]]; then
@@ -84,13 +83,7 @@ install_symlink() {
 ###########
 
 setup::shell() {
-  install_symlink ".bash_profile"
   install_symlink ".bashrc"
-  install_symlink ".bash_logout"
-  install_symlink ".zshenv"
-  install_symlink ".zshrc"
-  install_symlink ".zlogout"
-  install_symlink ".inputrc"
 }
 
 setup::vim() {
@@ -115,25 +108,12 @@ setup::gpg() {
 }
 
 setup::misc() {
-  install_symlink ".clang-format"
   install_symlink ".config/git/config"
   install_symlink ".config/git/ignore"
-  install_symlink ".config/zathura/zathurarc"
   install_symlink ".gdbinit"
-  install_symlink ".ipython/profile_default/ipython_config.py"
-  install_symlink ".latexmkrc"
   install_symlink ".local/opt/peda"
   install_symlink ".local/opt/pwndbg"
-  install_symlink ".local/share/zsh/site-functions"
-  install_symlink ".mikutter/plugin"
-  install_symlink ".nixpkgs/config.nix"
-  install_symlink ".tern-config"
   install_symlink ".tmux.conf"
-  install_symlink ".xprofile"
-  install_symlink ".xmonad"
-
-  install_symlink ".local/bin/fzf"
-  install_symlink ".local/bin/fzf-tmux"
 }
 
 setup::install_deps() {
