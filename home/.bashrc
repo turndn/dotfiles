@@ -134,3 +134,6 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
 	export WORKON_HOME=$HOME/.virtualenvs
 	source /usr/local/bin/virtualenvwrapper.sh
 fi
+
+export GOROOT=~/.go/go
+export PATH=$PATH:$GOROOT/bin
