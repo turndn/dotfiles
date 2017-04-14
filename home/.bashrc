@@ -135,3 +135,4 @@ fi
 
 export GOROOT=~/.go/go
 export PATH=$PATH:$GOROOT/bin
+source ~/.cargo/env
