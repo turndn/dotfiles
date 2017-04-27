@@ -84,6 +84,7 @@ install_symlink() {
 
 setup::shell() {
   install_symlink ".bashrc"
+  install_symlink ".bash_profile"
 }
 
 setup::vim() {
@@ -122,6 +123,7 @@ setup::install_plugins() {
   sudo apt-get install -y \
     build-essential \
     cmake \
+    python3-dev \
 
   vim +PlugInstall +qall
 }
