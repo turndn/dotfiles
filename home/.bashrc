@@ -114,25 +114,15 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=$HOME/.local/bin:$PATH
-export POWERLINE_CONFIG_COMMAND='powerline-config'
-source $HOME/.local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
-
 export PATH=$HOME/bin:$PATH
-
-alias objdump="objdump -M intel"
-alias gdb="gdb -q"
-alias peda="GDB_USE_PEDA=1 GDB_USE_PWNDBG=0 gdb"
-alias pwndbg="GDB_USE_PEDA=0 GDB_USE_PWNDBG=1 gdb"
-alias rp++="$HOME/tools/rp-lin-x64"
-alias checksec="$HOME/tools/checksec.sh/checksec"
-alias r2-web="r2 -c=H"
 
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
 	export WORKON_HOME=$HOME/.virtualenvs
 	source /usr/local/bin/virtualenvwrapper.sh
 fi
 
-export GOROOT=~/.go/go
-export PATH=$PATH:$GOROOT/bin
-source ~/.cargo/env
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "

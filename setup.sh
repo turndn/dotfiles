@@ -122,12 +122,6 @@ setup::install_plugins() {
   sudo apt-get install -y \
     build-essential \
     cmake \
-    cargo \
-    rustc \
-    npm \
-    nodejs \
-    zsh-syntax-highlighting
-  sudo ln -s /usr/bin/nodejs /usr/local/bin/node
 
   vim +PlugInstall +qall
 }
