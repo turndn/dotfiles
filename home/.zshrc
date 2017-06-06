@@ -17,7 +17,6 @@ path=(
   "$GOPATH/bin"
 )
 
-source ~/.nix-profile/etc/profile.d/nix.sh
 
 ###########################
 #  Aliases and Functions  #
@@ -147,52 +146,17 @@ source /etc/zsh_command_not_found
 ###########
 #  Theme  #
 ###########
-setopt prompt_subst
-
-if [[ "$TERM" == "dumb" ]]; then
-  PROMPT="%n: %~%# "
-  unset zle_bracketed_paste
-else
-  autoload -Uz vcs_info
-  zstyle ':vcs_info:*' actionformats \
-    '%b@%s%f: %F{blue}%r/%S%f' '[%F{red}%a%f]%c%u'
-  zstyle ':vcs_info:*' formats \
-    '%b@%s%f: %F{blue}%r/%S%f' '%c%u'
-  zstyle ':vcs_info:*' stagedstr "[%B%F{yellow}staged%f%b]"
-  zstyle ':vcs_info:*' unstagedstr "[%B%F{red}unstaged%f%b]"
-  zstyle ':vcs_info:*' check-for-changes true
-  zstyle ':vcs_info:*' enable git
-
-  update_prompt() {
-    prompt_prompt="%(?::%F{red})%#%f"
-    prompt_login="%B%(!:%F{red}:)"
-    prompt_hname=""
-    if [[ -n "$SSH_CONNECTION" ]]; then
-      prompt_login="%B%(!:%F{red}:%F{green})"
-      prompt_hname="@%m"
-    fi
-
-    vcs_info
-    if [[ -n "$vcs_info_msg_0_" ]]; then
-      PROMPT=$'$prompt_login$vcs_info_msg_0_\n$prompt_prompt%b '
-      RPROMPT="$vcs_info_msg_1_"
-    else
-      PROMPT=$'$prompt_login%n$prompt_hname%f: %F{blue}%~%f\n$prompt_prompt%b '
-      RPROMPT=""
-    fi
-  }
-
-  update_title() {
-    if [[ -n "$SSH_CONNECTION" ]]; then
-      print -Pn "\e]0;%m: %1~\a"
-    else
-      print -Pn "\e]0;%1~\a"
-    fi
-  }
-
-  add-zsh-hook precmd update_prompt
-  add-zsh-hook preexec update_title
-
-  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets)
+if [ -d "$HOME/.local/bin" ] ; then
+  PATH="$HOME/.local/bin:$PATH"
 fi
+export POWERLINE_COMMAND=powerline
+source $HOME/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+  export WORKON_HOME=$HOME/.virtualenvs
+  source /usr/local/bin/virtualenvwrapper.sh
+fi
+
+export GOROOT=~/.go/go
+export PATH=$PATH:$GOROOT/bin
+source ~/.cargo/env

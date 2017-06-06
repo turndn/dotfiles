@@ -83,7 +83,13 @@ install_symlink() {
 ###########
 
 setup::shell() {
+  install_symlink ".bash_profile"
   install_symlink ".bashrc"
+  install_symlink ".bash_logout"
+  install_symlink ".zshenv"
+  install_symlink ".zshrc"
+  install_symlink ".zlogout"
+  install_symlink ".inputrc"
 }
 
 setup::vim() {
@@ -114,6 +120,7 @@ setup::misc() {
   install_symlink ".local/libexec/fzf/install"
   install_symlink ".local/opt/peda"
   install_symlink ".local/opt/pwndbg"
+  install_symlink ".local/share/zsh/site-functions"
   install_symlink ".tmux.conf"
 }
 
