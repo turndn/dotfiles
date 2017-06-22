@@ -23,6 +23,7 @@ main() {
   echo "$(tput bold)== Installing configuration ==$(tput sgr0)"
   setup::shell
   setup::vim
+  setup::gpg
   setup::misc
 
   if [[ -n "$install_plugins" ]]; then
@@ -114,14 +115,23 @@ setup::gpg() {
 }
 
 setup::misc() {
+  install_symlink ".clang-format"
   install_symlink ".config/git/config"
   install_symlink ".config/git/ignore"
+  install_symlink ".config/ranger/rc.conf"
+  install_symlink ".config/ranger/scope.sh"
+  install_symlink ".config/zathura/zathurarc"
   install_symlink ".gdbinit"
+  install_symlink ".ipython/profile_default/ipython_config.py"
   install_symlink ".local/libexec/fzf/install"
   install_symlink ".local/opt/peda"
   install_symlink ".local/opt/pwndbg"
   install_symlink ".local/share/zsh/site-functions"
+  install_symlink ".nixpkgs/config.nix"
+  install_symlink ".screenrc"
+  install_symlink ".tern-config"
   install_symlink ".tmux.conf"
+  install_symlink ".xprofile"
 }
 
 setup::install_plugins() {
