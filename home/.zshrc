@@ -9,6 +9,7 @@ export GPG_TTY="$(tty)"
 
 typeset -U path
 path=(
+  "/usr/lib/icecc/bin"
   "$HOME/.local/bin"
   $path
   "$GEM_HOME/bin"
