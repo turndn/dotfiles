@@ -118,9 +118,7 @@ bindkey -a \
   'ys' add-surround \
   'K' run-help \
   '^A' incarg \
-  '^X' decarg \
-  '\\/' history-incremental-pattern-search-backward \
-  '\\?' history-incremental-pattern-search-forward
+  '^X' decarg
 bindkey -M visual 'S' add-surround
 bindkey -M menuselect \
   '^B' backward-char \
