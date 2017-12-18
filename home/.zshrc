@@ -6,12 +6,14 @@ autoload -Uz add-zsh-hook
 ###########################
 export GEM_HOME="$(/usr/bin/ruby -e 'print Gem.user_dir')"
 export GPG_TTY="$(tty)"
+export USE_POWERLINE=0
 
 typeset -U path
 path=(
   "/usr/lib/icecc/bin"
   "$HOME/.local/bin"
   $path
+  ~/.cargo/bin
   "$GEM_HOME/bin"
   "$(/usr/bin/python -c 'import site; print(site.getuserbase())')/bin"
   "$(/usr/bin/python3 -c 'import site; print(site.getuserbase())')/bin"
@@ -28,12 +30,14 @@ alias egrep='egrep --color=auto'
 alias ls='ls -F --color=auto'
 alias ll='ls -lh'
 alias la='ls -lAh'
-alias peda='GDB_USE_PEDA=1 GDB_USE_PWNDBG=0 gdb'
-alias pwndbg='GDB_USE_PEDA=0 GDB_USE_PWNDBG=1 gdb'
+alias gef='GDB_USE_GEF=1 GDB_USE_PEDA=0 GDB_USE_PWNDBG=0 gdb'
+alias peda='GDB_USE_GEF=0 GDB_USE_PEDA=1 GDB_USE_PWNDBG=0 gdb'
+alias pwndbg='GDB_USE_GEF=0 GDB_USE_PEDA=0 GDB_USE_PWNDBG=1 gdb'
 alias xmonad-replace='nohup xmonad --replace &> /dev/null &'
 autoload -Uz edit-command-line
 autoload -Uz run-help run-help-git run-help-openssl run-help-sudo
 autoload -Uz zmv
+autoload -Uz fzf-sel fzf-run fzf-loop fzf-gen
 
 #################
 #  Directories  #
@@ -80,7 +84,8 @@ zstyle ':completion:*:*:kill:*:processes' list-colors \
 zstyle ':completion:*:*:*:*:processes' \
   command "ps -u `whoami` -o pid,user,comm -w -w"
 
-autoload -Uz compinit && compinit -i
+# skip the slooow security checks (-C), it's pointless in a single-user setup
+autoload -Uz compinit && compinit -C
 
 #################
 #  Keybindings  #
@@ -92,6 +97,7 @@ autoload -Uz fzf-complete && zle -N fzf-complete
 autoload -Uz fzf-cd-widget && zle -N fzf-cd-widget
 autoload -Uz fzf-file-widget && zle -N fzf-file-widget
 autoload -Uz fzf-history-widget && zle -N fzf-history-widget
+autoload -Uz fzf-snippet-expand && zle -N fzf-snippet-expand
 autoload -Uz surround \
   && zle -N delete-surround surround \
   && zle -N add-surround surround \
@@ -110,6 +116,7 @@ bindkey -v \
   '^U' backward-kill-line \
   '^W' backward-kill-word \
   '^X^F' fzf-file-widget \
+  '^X^J' fzf-snippet-expand \
   '^X^R' fzf-history-widget \
   '^?' backward-delete-char
 bindkey -a \
@@ -147,6 +154,57 @@ source /etc/zsh_command_not_found
 ###########
 if [ -d "$HOME/.local/bin" ] ; then
   PATH="$HOME/.local/bin:$PATH"
+fi
+setopt prompt_subst
+
+[[ -z "$DISPLAY$WAYLAND_DISPLAY$SSH_CONNECTION" ]] && unset USE_POWERLINE
+
+if [[ "$TERM" == "dumb" ]]; then
+  PROMPT="%n: %~%# "
+  unset zle_bracketed_paste
+else
+  autoload -Uz vcs_info
+  zstyle ':vcs_info:*' actionformats \
+    '%b@%s%f: %F{blue}%r/%S%f' '[%F{red}%a%f]%c%u'
+  zstyle ':vcs_info:*' formats \
+    '%b@%s%f: %F{blue}%r/%S%f' '%c%u'
+  zstyle ':vcs_info:*' stagedstr "[%B%F{yellow}staged%f%b]"
+  zstyle ':vcs_info:*' unstagedstr "[%B%F{red}unstaged%f%b]"
+  zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:*' enable git
+
+  update_prompt() {
+    local prompt_prompt="%(?::%F{red})%#%f"
+    local prompt_login="%B%(!:%F{red}:)"
+    local prompt_hname=""
+    if [[ -n "$SSH_CONNECTION" ]]; then
+      prompt_login="%B%(!:%F{red}:%F{green})"
+      prompt_hname="@%m"
+    fi
+
+    vcs_info
+    if [[ -n "$vcs_info_msg_0_" ]]; then
+      PROMPT="$prompt_login$vcs_info_msg_0_"$'\n'"$prompt_prompt%b "
+      RPROMPT="$vcs_info_msg_1_"
+    else
+      PROMPT="$prompt_login%n$prompt_hname%f: %F{blue}%~%f"$'\n'"$prompt_prompt%b "
+      RPROMPT=""
+    fi
+  }
+
+  update_title() {
+    if [[ -n "$SSH_CONNECTION" ]]; then
+      print -Pn "\e]0;%m: %1~\a"
+    else
+      print -Pn "\e]0;%1~\a"
+    fi
+  }
+
+  add-zsh-hook precmd update_prompt
+  add-zsh-hook preexec update_title
+
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets)
 fi
 export POWERLINE_COMMAND=powerline
 source $HOME/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh

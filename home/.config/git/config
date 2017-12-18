@@ -5,5 +5,3 @@
 	default = simple
 [merge]
 	tool = vimdiff
-[submodule]
-	fetchJobs = 0
