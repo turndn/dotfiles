@@ -156,6 +156,12 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
   source /usr/local/bin/virtualenvwrapper.sh
 fi
 
+if [ -f $HOME/.local/bin/virtualenvwrapper.sh ]; then
+  export WORKON_HOME=$HOME/.virtualenvs
+  source $HOME/.local/bin/virtualenvwrapper.sh
+fi
+
 export GOROOT=~/.go/go
 export PATH=$PATH:$GOROOT/bin
+export GOPATH=~/.go/
 source ~/.cargo/env
