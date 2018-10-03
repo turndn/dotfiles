@@ -7,3 +7,5 @@
 	tool = vimdiff
 [submodule]
 	fetchJobs = 0
+[merge "ours"]
+	driver = true
