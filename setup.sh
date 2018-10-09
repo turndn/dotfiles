@@ -93,17 +93,14 @@ setup::misc() {
   install::default ".config/ranger/rc.conf"
   install::default ".config/ranger/scope.sh"
   install::default ".config/tig/config"
-  install::default ".config/zathura/zathurarc"
   install::default ".ipython/profile_default/ipython_config.py"
   install::default ".local/libexec/fzf/install"
   install::default ".local/opt/fzftools"
-  install::default ".local/opt/tmux-copycat"
   install::default ".screenrc"
   install::default ".tern-config"
   install::default ".tmux.conf"
   install::default ".wgetrc"
   install::default ".xprofile"
-  install::default ".xmonad"
 
   # gdb
   install::default ".gdbinit"
@@ -115,14 +112,6 @@ setup::misc() {
   install::default ".config/latexmk/latexmkrc"
   install::default ".local/bin/platexmk"
   install::default ".local/bin/uplatexmk"
-
-  # spacemacs
-  [[ ! -d ~/.emacs.d ]] && git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
-  install::default ".spacemacs"
-
-  # vscode
-  install::default ".config/Code/User/settings.json"
-  chmod 700 ~/.config/Code
 }
 
 setup::prune() {
@@ -131,7 +120,6 @@ setup::prune() {
   prune ".vimrc"
   prune ".gvimrc"
   prune ".config/shell/common.snip"
-  prune ".mikutter/plugin"
   prune ".nixpkgs/config.nix"
 }
 
