@@ -7,6 +7,12 @@ autoload -Uz add-zsh-hook
 export GEM_HOME="$(/usr/bin/ruby -e 'print Gem.user_dir')"
 export GPG_TTY="$(tty)"
 
+export GOROOT=~/.go/go
+export PATH=$PATH:$GOROOT/bin
+export GOPATH=~/.go/
+source ~/.cargo/env
+source $HOME/.nix-profile/etc/profile.d/nix.sh
+
 typeset -U path
 path=(
   "/usr/lib/icecc/bin"
@@ -161,7 +167,3 @@ if [ -f $HOME/.local/bin/virtualenvwrapper.sh ]; then
   source $HOME/.local/bin/virtualenvwrapper.sh
 fi
 
-export GOROOT=~/.go/go
-export PATH=$PATH:$GOROOT/bin
-export GOPATH=~/.go/
-source ~/.cargo/env
