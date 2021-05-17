@@ -1,9 +1,9 @@
 export COPYFILE_DISABLE=1
 export EDITOR="vim"
 export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 export LESS="iMR"
 export PAGER="less"
 
 export GTK_PATH=/usr/local/lib/gtk-2.0
-export GOPATH=~/Documents/src/go
-export ANDROID_HOME=/usr/local/opt/android-sdk
+export GOPATH=~/go

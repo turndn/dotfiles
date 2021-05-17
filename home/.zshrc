@@ -8,18 +8,21 @@ autoload -Uz is-at-least
 export CLICOLOR=1
 export GEM_HOME="$(ruby -e 'print Gem.user_dir')"
 export GPG_TTY="$(tty)"
-export USE_POWERLINE=0
+# export USE_POWERLINE=0
 
 typeset -U path
 path=(
   ~/.local/bin
   /usr/local/opt/python/libexec/bin
+  /usr/local/bin
   /usr/local/sbin
   $path
   ~/.cargo/bin
+  ~/.local/bin
+  `/usr/local/bin/python3 -c 'import site; print(site.getuserbase())'`/bin
   "$GEM_HOME/bin"
-  "$(python3 -c 'import site; print(site.getuserbase())')/bin"
   "$GOPATH/bin"
+  /Library/Tex/texbin
 )
 
 ###########################
@@ -291,3 +294,4 @@ esac
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets)
+
